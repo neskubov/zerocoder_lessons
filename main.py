@@ -1,2 +1,4 @@
-print(i)
-jhgjh
+print(i;lambda )jgjgjh
+jkjhkjh
+
+jhgjhjgjhgghfhgfgf
