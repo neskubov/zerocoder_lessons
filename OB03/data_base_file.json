@@ -1,0 +1,10 @@
+{
+    "list_employees": [
+        "ZooKeeper"
+    ],
+    "list_animals": [
+        "Bird",
+        "Reptile",
+        "Mammal"
+    ]
+}
