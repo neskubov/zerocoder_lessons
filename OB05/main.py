@@ -1,119 +1,128 @@
 import pygame
 import time
 
+# Инициализация Pygame
 pygame.init()
 pygame.display.set_caption("Пинг-понг")
 
 # Настройки окна
-WIDTH, HEIGHT = (800, 500)  # Размер окна
-WINDOW_COLOR = (0, 0, 0)  # Цвет фона (чёрный)
-FPS = 60                  # Частота кадров
-
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+WIDTH, HEIGHT = 800, 500
+WINDOW_COLOR = (0, 0, 0)
+FPS = 60
 
 # Настройки ракеток
-W_BOARD, L_BOARD = (10, 100)
-OFFSET = 10
-OBJECT_COLOR = (255, 0, 0)
-xl, yl = OFFSET, (HEIGHT // 2 - L_BOARD // 2)
-xr, yr = (WIDTH - W_BOARD - OFFSET), (HEIGHT // 2 - L_BOARD // 2)
-SPEED = 10
+PADDLE_WIDTH, PADDLE_HEIGHT = 10, 100
+PADDLE_OFFSET = 10
+PADDLE_COLOR = (255, 0, 0)
+PADDLE_SPEED = 10
 
 # Настройки шарика
-R = 5
-l_x_ball, l_y_ball = (xl + OFFSET + R), (yl + L_BOARD // 2 - R * 2)
-r_x_ball, r_y_ball = (xr - OFFSET - R), (yr - L_BOARD // 2 + R * 2)
-x_ball, y_ball = l_x_ball, l_y_ball
-ball_speed_x = SPEED
-ball_speed_y = SPEED
+BALL_RADIUS = 5
+BALL_SPEED = 10
 
-# Счет
-FONT_SIZE = 50
-font = pygame.font.Font(None, FONT_SIZE)
-TEXT_POINTS_POSITION = ((WIDTH // 2 - FONT_SIZE // 2),(HEIGHT // 2 - FONT_SIZE // 2))
-
+# Счет и размер шрифта
+FONT_SIZE = 25
+FONT_COLOR = (255, 0, 0)
 MAX_POINTS = 15
-points_l, points_r = (0, 0)
+
+# Инициализация объектов
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+font = pygame.font.Font("Roboto-Italic-VariableFont_wdth,wght.ttf", FONT_SIZE)
+clock = pygame.time.Clock()
+
+# Начальные позиции объектов
+def reset_game():
+    """Сбрасывает игру к начальному состоянию."""
+    global left_paddle, right_paddle, ball, ball_speed_x, ball_speed_y, points_left, points_right, game_active
+    left_paddle = pygame.Rect(PADDLE_OFFSET, (HEIGHT - PADDLE_HEIGHT) // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
+    right_paddle = pygame.Rect(WIDTH - PADDLE_WIDTH - PADDLE_OFFSET, (HEIGHT - PADDLE_HEIGHT) // 2, PADDLE_WIDTH, PADDLE_HEIGHT)
+    ball = pygame.Rect(WIDTH // 2, HEIGHT // 2, BALL_RADIUS * 2, BALL_RADIUS * 2)
+    ball_speed_x, ball_speed_y = BALL_SPEED, BALL_SPEED
+    points_left, points_right = 0, 0
+    game_active = False
+
+reset_game()
+
+def reset_ball():
+    """Сброс позиции мяча в центр."""
+    ball.x, ball.y = WIDTH // 2 - BALL_RADIUS, HEIGHT // 2 - BALL_RADIUS
+    return BALL_SPEED if points_left <= points_right else -BALL_SPEED, BALL_SPEED
+
+def draw_objects():
+    """Рисует все игровые объекты."""
+    screen.fill(WINDOW_COLOR)
+    pygame.draw.rect(screen, PADDLE_COLOR, left_paddle)
+    pygame.draw.rect(screen, PADDLE_COLOR, right_paddle)
+    pygame.draw.ellipse(screen, PADDLE_COLOR, ball)
+    text_surface = font.render(f"{points_left}:{points_right}", True, FONT_COLOR)
+    screen.blit(text_surface, ((WIDTH - text_surface.get_width()) // 2, 10))
+
+def draw_winner():
+    """Отображает экран победителя."""
+    winner = "левый" if points_left > points_right else "правый"
+    text_surface = font.render(f"Победил {winner} игрок! (Нажмите R, чтобы перезапустить)", True, FONT_COLOR)
+    screen.blit(text_surface, ((WIDTH - text_surface.get_width()) // 2, (HEIGHT - text_surface.get_height()) // 2))
 
 # Главный игровой цикл
-clock = pygame.time.Clock()
 running = True
-flag_start = False
-
 while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
 
     keys = pygame.key.get_pressed()
-
-    #Старт/пауза на D
+# Старт/пауза игры (клавиша D)
     if keys[pygame.K_d]:
-        flag_start = True if not flag_start else False
-        time.sleep(1)
+        game_active = not game_active
+        time.sleep(0.3)  # Задержка для предотвращения множественных переключений
 
-    if flag_start:
-        #Движение левой ракетки
-        if keys[pygame.K_w] and yl > 0:
-            yl -= SPEED
-        if keys[pygame.K_s] and yl < HEIGHT - L_BOARD:
-            yl += SPEED
+    # Перезапуск игры (клавиша R)
+    if keys[pygame.K_r]:
+        reset_game()
+        time.sleep(0.3)  # Задержка для предотвращения множественных переключений
+
+    if game_active and points_left < MAX_POINTS and points_right < MAX_POINTS:
+        # Движение левой ракетки
+        if keys[pygame.K_w] and left_paddle.top > 0:
+            left_paddle.y -= PADDLE_SPEED
+        if keys[pygame.K_s] and left_paddle.bottom < HEIGHT:
+            left_paddle.y += PADDLE_SPEED
 
         # Движение правой ракетки
-        if keys[pygame.K_UP] and yr > 0 and flag_start:
-            yr -= SPEED
-        if keys[pygame.K_DOWN]  and yr < HEIGHT - L_BOARD:
-            yr += SPEED
+        if keys[pygame.K_UP] and right_paddle.top > 0:
+            right_paddle.y -= PADDLE_SPEED
+        if keys[pygame.K_DOWN] and right_paddle.bottom < HEIGHT:
+            right_paddle.y += PADDLE_SPEED
 
         # Движение мяча
-        x_ball += ball_speed_x
-        y_ball += ball_speed_y
+        ball.x += ball_speed_x
+        ball.y += ball_speed_y
 
-        # Столкновение с краями экрана
-        if xr <= x_ball <= xr + W_BOARD and yr <= y_ball + R <= yr + L_BOARD:
-            ball_speed_x = -SPEED
+        # Отражение мяча от верхнего и нижнего края
+        if ball.top <= 0 or ball.bottom >= HEIGHT:
+            ball_speed_y = -ball_speed_y
 
-        if xl <= x_ball <= xl + W_BOARD and yl <= y_ball + R <= yl + L_BOARD:
-            ball_speed_x = +SPEED
+        # Отражение мяча от ракеток
+        if ball.colliderect(left_paddle) and ball_speed_x < 0:
+            ball_speed_x = -ball_speed_x
+        if ball.colliderect(right_paddle) and ball_speed_x > 0:
+            ball_speed_x = -ball_speed_x
 
-        if y_ball >= HEIGHT:
-            ball_speed_y = -SPEED
-
-        if y_ball <= 0:
-            ball_speed_y = +SPEED
-
-        if x_ball < 0:
-            points_r += 1
-            x_ball, y_ball = r_x_ball, r_y_ball
-
-        if x_ball > WIDTH:
-            points_l += 1
-            x_ball, y_ball = l_x_ball, l_y_ball
+        # Проверка на голы
+        if ball.left <= 0:
+            points_right += 1
+            ball_speed_x, ball_speed_y = reset_ball()
+        if ball.right >= WIDTH:
+            points_left += 1
+            ball_speed_x, ball_speed_y = reset_ball()
 
     # Отрисовка
-    screen.fill(WINDOW_COLOR)
-
-    if MAX_POINTS > points_r and MAX_POINTS > points_l:
-        pygame.draw.rect(screen, OBJECT_COLOR, (xl, yl, W_BOARD, L_BOARD ), 0)
-        pygame.draw.rect(screen, OBJECT_COLOR, (xr, yr, W_BOARD, L_BOARD), 0)
-        pygame.draw.circle(screen, OBJECT_COLOR, (x_ball, y_ball), R, 5)
-        text_surface = font.render((str(points_l) + ":" + str(points_r)), True, OBJECT_COLOR)
-        screen.blit(text_surface, TEXT_POINTS_POSITION)
+    if points_left < MAX_POINTS and points_right < MAX_POINTS:
+        draw_objects()
     else:
-        # Задаем победителя
-        gamer = "левый" if points_l > points_r else "правый"
-        text_game_over = f"Победил {gamer} игрок"
-        text_game_over_surface = font.render(text_game_over, True, OBJECT_COLOR)
+        draw_winner()
 
-        # Получаем размеры текстовой поверхности
-        text_width, text_height = text_game_over_surface.get_size()
+    pygame.display.flip()
+    clock.tick(FPS)
 
-        # Рассчитываем позицию для центрирования текста
-        text_game_over_position = ((WIDTH - text_width) // 2, (HEIGHT - text_height) // 2)
-
-        # Отрисовываем текст
-        screen.blit(text_game_over_surface, text_game_over_position)
-
-    pygame.display.flip()  # Обновляем экран
-
-    clock.tick(FPS) # Ограничение FPS
+pygame.quit()
