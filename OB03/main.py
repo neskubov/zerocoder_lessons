@@ -18,7 +18,7 @@ class Bird(Animal):
         self.age = age
 
     def make_sound(self):
-        print(f"Чирик")
+        print("Чирик")
 
 class Mammal(Animal):
     def __init__(self, name="Mammal", age=1):
@@ -27,7 +27,7 @@ class Mammal(Animal):
         self.age = age
 
     def make_sound(self):
-        print(f"Му")
+        print("Му")
 
 class Reptile(Animal):
     def __init__(self, name="Reptile", age=1):
@@ -36,7 +36,7 @@ class Reptile(Animal):
         self.age = age
 
     def make_sound(self):
-        print(f"Ща")
+        print("Ща")
 
 class ZooKeeper:
     def __init__(self, name="ZooKeeper"):
