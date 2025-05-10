@@ -6,7 +6,7 @@ class Hero:
 
     def attack(self, other_hero):
         other_hero.health = other_hero.health - self.attack_power
-        print(f"{self.name} атаковал {other_hero.name} и нанес урон: {self.attack_power}.\n", \
+        print(f"{self.name} атаковал {other_hero.name} и нанес урон: {self.attack_power}.\n",
               f"Здоровье {other_hero.name}: {other_hero.health}")
 
     def is_alive(self):
