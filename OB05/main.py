@@ -71,7 +71,7 @@ while running:
             running = False
 
     keys = pygame.key.get_pressed()
-# Старт/пауза игры (клавиша D)
+    # Старт/пауза игры (клавиша D)
     if keys[pygame.K_d]:
         game_active = not game_active
         time.sleep(0.3)  # Задержка для предотвращения множественных переключений
