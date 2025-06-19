@@ -1,0 +1,56 @@
+/* Общие стили для страницы */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Контейнер для карточек */
+.card-container {
+  display: flex;
+  gap: 20px;
+}
+
+/* Карточка */
+.card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 250px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+/* Задание размера для фото */
+.profile-photo {
+  border-radius: 50%;
+  width: 120px; /* Ширина фото */
+  height: 120px; /* Высота фото */
+  object-fit: cover; /* Обрезка фото, чтобы оно вписывалось в круг */
+  margin-bottom: 15px;
+}
+
+/* Стили для текста */
+.name {
+  font-size: 20px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.email, .birth-date, .city {
+  font-size: 14px;
+  color: #666;
+}
+
+/* Эффект при наведении на карточку */
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+}
