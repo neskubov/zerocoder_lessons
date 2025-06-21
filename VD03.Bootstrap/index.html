@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Мир Гарри Поттера</title>
+  <!-- Подключение Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Стили для изображений в карточках */
+    .card-img {
+      width: 100%; /* Задает ширину изображения под ширину карточки */
+      height: 800px; /* Определяет фиксированную высоту */
+      object-fit: cover; /* Устанавливает обрезку изображения, чтобы не возникали искажения */
+    }
+  </style>
+</head>
+<body>
+  <!-- Шапка сайта -->
+  <header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+      <h1 class="h3 m-0">Мир Гарри Поттера</h1>
+      <nav>
+        <ul class="nav">
+          <li class="nav-item"><a href="#" class="nav-link text-white">Главная</a></li>
+          <li class="nav-item"><a href="#" class="nav-link text-white">Книги</a></li>
+          <li class="nav-item"><a href="#" class="nav-link text-white">Фильмы</a></li>
+          <li class="nav-item"><a href="#" class="nav-link text-white">Персонажи</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Основной контент -->
+  <main class="container my-4">
+    <!-- Секция 1: Слайдер -->
+    <section class="mb-5">
+      <h2>Добро пожаловать в волшебный мир</h2>
+      <div id="carouselExample" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="https://almazka.kz/wp-content/uploads/2023/02/MKAZ824.jpg" class="d-block w-100" alt="Гарри Поттер">
+          </div>
+          <div class="carousel-item">
+            <img src="https://ahaslides.com/wp-content/uploads/2023/08/hph.webp" class="d-block w-100" alt="Тайная комната">
+          </div>
+          <div class="carousel-item">
+            <img src="https://avatars.mds.yandex.net/i?id=f5913717458e4d3309dae3fca382f35b_l-12421938-images-thumbs&n=13" class="d-block w-100" alt="Узник Азкабана">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Предыдущий</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Следующий</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Секция 2: Карточки -->
+    <section class="mb-5">
+      <h2>Ключевые персонажи</h2>
+      <div class="row">
+        <div class="col-lg-4 mb-3">
+          <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/d/d7/Harry_Potter_character_poster.jpg" class="card-img-top card-img" alt="Гарри Поттер">
+            <div class="card-body">
+              <h5 class="card-title">Гарри Поттер</h5>
+              <p class="card-text">Главный герой истории, мальчик, который выжил. Его судьба связана с тёмным магом Волдемортом.</p>
+              <a href="#" class="btn btn-primary">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-3">
+          <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/0a/Emma_Watson_interview_in_2017.jpg" class="card-img-top card-img" alt="Гермиона Грейнджер">
+            <div class="card-body">
+              <h5 class="card-title">Гермиона Грейнджер</h5>
+              <p class="card-text">Лучшая подруга Гарри, выдающаяся ученица Хогвартса и мастер заклинаний.</p>
+              <a href="#" class="btn btn-primary">Подробнее</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 mb-3">
+          <div class="card">
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/5e/Ron_Weasley_poster.jpg" class="card-img-top card-img" alt="Рон Уизли">
+            <div class="card-body">
+              <h5 class="card-title">Рон Уизли</h5>
+              <p class="card-text">Верный друг Гарри и Гермионы. Член большой и доброй семьи Уизли.</p>
+              <a href="#" class="btn btn-primary">Подробнее</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Секция 3: Аккордеон -->
+    <section>
+      <h2>Интересные факты</h2>
+      <div class="accordion" id="accordionExample">
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              Кто такой "мальчик, который выжил"?
+            </button>
+          </h2>
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Гарри Поттер — единственный, кто выжил после смертельного заклинания Волдеморта, благодаря защите любви его матери.
+            </div>
+              </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+              Что такое Хогвартс?
+            </button>
+          </h2>
+          <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Хогвартс — школа магии и волшебства, где обучаются юные волшебники и ведьмы. Она делится на четыре факультета: Гриффиндор, Пуффендуй, Когтевран и Слизерин.
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+              Что такое крестражи?
+            </button>
+          </h2>
+          <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              Крестражи — магические объекты, в которые Волдеморт спрятал части своей души, чтобы стать бессмертным.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Футер -->
+  <footer class="bg-dark text-white py-3">
+    <div class="container text-center">
+      <p>Контакты: info@hogwarts.com | Тел.: +123 456 789</p>
+      <p>
+        Подписывайтесь на нас:
+        <a href="#" class="text-white mx-2">Facebook</a>
+        <a href="#" class="text-white mx-2">Twitter</a>
+        <a href="#" class="text-white mx-2">Instagram</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Подключение Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
