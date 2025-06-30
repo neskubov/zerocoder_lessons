@@ -1,6 +1,5 @@
-from flask import Flask, render_template, request
-
-app = Flask(__name__)
+from flask import render_template, request
+from app import app
 
 @app.route('/', methods=['GET', 'POST'])
 def blog():
@@ -20,4 +19,4 @@ def blog():
             'age': age
         }
 
-    return render_template('index.html', user_data=user_data)
+    return render_template('blog.html', user_data=user_data)
