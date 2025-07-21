@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from app.models import User
+from app.models import User, load_user
 from app import app, db, bcrypt
 from app.forms import RegistrationForm, LoginForm, EditProfile
 
@@ -25,8 +25,6 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('login'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -38,15 +36,21 @@ def login():
     return render_template('login.html', form=form, title='Login')
 
 @app.route('/editProfile', methods=['GET', 'POST'])
-def editProfile():
+def editProfile(user):
     form = EditProfile()
     if form.validate_on_submit():
-        hashed_new_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        user = User.query.filter_by(email=form.email.data).first()
-        db.session.add(user)
+        print(1)
+        hashed_password = bcrypt.generate_password_hash(form.new_password.data).decode('utf-8')
+        if form.new_username.data:
+            user.username = form.new_username.data
+        if form.new_email.data:
+            user.email = form.new_email.data
+        if form.new_password.data:
+            user.password = hashed_password
         db.session.commit()
-        flash('Вы успешно зарегистрировались!', 'success')
-        return redirect(url_for('login'))
+        flash('Данные успешно изменены!', 'success')
+        return redirect('editProfile.html')
+
     return render_template('editProfile.html', form=form, title='editProfile')
 
 
