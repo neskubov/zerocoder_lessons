@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-{{ title }}
+    {{ title }}
 {% endblock %}
 
 {% block content %}
@@ -9,18 +9,26 @@
 
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Получить цитату с ресурса {{title}}</h1>
-    <form method="post" action="{{ url_for('base') }}" class="needs-validation" novalidate>
+
+    <form method="post" action="{{ url_for('api_ninjas_com') }}" class="needs-validation" novalidate>
         {{ form.hidden_tag() }}
-        <div class="mb-3">
-            <label for="api_key" class="form-label">{{ form.api_key.label }}</label>
-            {{ form.api_key(class="form-control", id="api_key") }}
+
+        {% if api_key %}
+        <div class="d-grid gap-2 col-6 mx-auto">
+            {{ form.api_key.label }}
+            {{ form.api_key }}
         </div>
-        <div class="d-grid gap-2">
+        {% endif %}
+
+        <div class="d-grid gap-2 col-6 mx-auto">
             {{ form.submit(class="btn btn-primary") }}
         </div>
-        <div class="mt-3">
-            {{ form.quote }}
-        </div>
+
+        <div class="card-body text-center">
+                <h1 class="card-title">Случайная цитата</h1>
+                <p class="card-text mt-4" style="font-size: 1.5rem;">"{{ quote }}"</p>
+                <p class="text-muted">— {{ author }}</p>
+            </div>
     </form>
 </div>
 

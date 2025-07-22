@@ -28,7 +28,7 @@
                         <a class="nav-link" href="{{ url_for('api_ninjas_com') }}">api-ninjas.com</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url_for('quoteslate_vercel_app') }}">quoteslate.vercel.app</a>
+                        <a class="nav-link" href="{{ url_for('base') }}">quoteslate.vercel.app</a>
                     </li>
                 </ul>
             </div>
@@ -47,7 +47,8 @@
                 {% endfor %}
             {% endif %}
         {% endwith %}
-        {% block content %}{% endblock %}
+        {% block content %}
+        {% endblock %}
     </div>
 
     <!-- Подключение Bootstrap JavaScript -->
