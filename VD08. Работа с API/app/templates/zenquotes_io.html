@@ -8,17 +8,10 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QZ6g4e+AwlNHk8M+T9O3FqY3xk5NQl5o6Hf9P+N4+5jD5M+WjE5cK9W5Z5F5N5K5" crossorigin="anonymous">
 
 <div class="container mt-5">
-    <h1 class="mb-4 text-center">Получить цитату с ресурса {{title}}</h1>
+    <h1 class="mb-4 text-center">Получить цитату с ресурса<br><a href={{title}}>{{title}}</a></h1>
 
-    <form method="post" action="{{ url_for('api_ninjas_com') }}" class="needs-validation" novalidate>
+    <form method="post" action="{{ url_for('zenquotes_io') }}" class="needs-validation" novalidate>
         {{ form.hidden_tag() }}
-
-        {% if api_key %}
-        <div class="d-grid gap-2 col-6 mx-auto">
-            {{ form.api_key.label }}
-            {{ form.api_key }}
-        </div>
-        {% endif %}
 
         <div class="d-grid gap-2 col-6 mx-auto">
             {{ form.submit(class="btn btn-primary") }}
