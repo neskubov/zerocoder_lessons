@@ -10,7 +10,7 @@
 <div class="container mt-5">
     <h1 class="mb-4 text-center">Получить цитату с ресурса<br><a href={{title}}>{{title}}</a></h1>
 
-    <form method="post" action="{{ url_for('api_ninjas_com') }}" class="needs-validation" novalidate>
+    <form method="post" action="{{ url_for('quoteslate_vercel_app') }}" class="needs-validation" novalidate>
         {{ form.hidden_tag() }}
 
         {% if api_key %}

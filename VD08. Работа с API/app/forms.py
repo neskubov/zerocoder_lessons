@@ -1,27 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
-from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Length
 
+class form_with_key(FlaskForm):
+    api_key = StringField('API_KEY', validators=[DataRequired(), Length(min=35, max=45)])
+    submit = SubmitField('Получить цитату')
 
-
-class base_form(FlaskForm):
-    api_key = StringField('API_KEY', validators=[DataRequired(), Length(min=2, max=35)])
-    submit = SubmitField('Get Quotes')
-
-
-class zenquotes_io(FlaskForm):
-    api_key = StringField('API_KEY', validators=[DataRequired(), Length(min=2, max=35)])
-    submit = SubmitField('Get Quotes')
-
-
-class api_ninjas_com(FlaskForm):
-    api_key = StringField('API_KEY', validators=[DataRequired(), Length(min=2, max=35)])
-    submit = SubmitField('Get Quotes')
-
-
-class quoteslate_vercel_app(FlaskForm):
-    api_key = StringField('API_KEY', validators=[DataRequired(), Length(min=2, max=35)])
-    submit = SubmitField('Get Quotes')
-
+class form_without_key(FlaskForm):
+    submit = SubmitField('Получить цитату')
 
 
