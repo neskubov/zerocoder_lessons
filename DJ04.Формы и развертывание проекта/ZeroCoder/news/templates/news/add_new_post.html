@@ -1,0 +1,45 @@
+{% extends 'main/layoute.html' %}
+
+{% block title %}
+	<title>Страница для добавления новостей</title>
+{% endblock %}
+
+{% block content %}
+<h1>Страница для добавления новостей</h1>
+<div class="container mt-5">
+  <div class="card shadow">
+    <div class="card-header bg-primary text-white">
+      ✍🏻 Добавление новости
+    </div>
+    <div class="card-body">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Заголовок новости</label>
+          {{form.title}}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Краткое описание</label>
+          {{form.short_description}}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Содержание</label>
+          {{form.text}}
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Дата</label>
+            {{form.pub_date}}
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">
+          ➕ Добавить новость
+        </button>
+      </form>
+      <p>{{error}}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

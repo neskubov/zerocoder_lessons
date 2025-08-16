@@ -1,0 +1,40 @@
+{% extends 'films/base.html' %}
+
+{% block title %}
+    <title>MovieHub</title>
+{% endblock %}
+
+{% block content%}
+    <div class="container mt-5">
+        <h1 class="text-center">Добро пожаловать в приложение «Фильмы» 🎬</h1>
+        <p class="text-muted text-center">Список фильмов</p>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% if films %}
+            {% for film in films %}
+
+                <div class="col-md-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ film.title }}</h5>
+
+                            <!-- Блок с описанием -->
+                            <h6 class="card-subtitle mb-2 text-muted">Описание</h6>
+                            <p class="card-text">{{ film.description }}</p>
+
+                            <hr>
+
+                            <!-- Блок с отзывом -->
+                            <h6 class="card-subtitle mb-2 text-muted">Отзыв</h6>
+                            <p class="card-text">{{ film.review }}</p>
+                        </div>
+                    </div>
+                </div>
+
+            {% endfor %}
+        {% else %}
+            <h4>Фильмов ещё нет.</h4>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}
