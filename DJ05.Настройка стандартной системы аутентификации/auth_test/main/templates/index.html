@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>home</title>
+{% endblock %}
+
+{% block header%}
+    <header class="text-white text-center py-5"
+        style="background: linear-gradient(135deg, #a18cd1, #fbc2eb, #8ec5fc);">
+        <div class="container">
+          <h1 class="display-4">Добро пожаловать!</h1>
+          <p class="lead">Это простая страница по уроку на Django</p>
+          <a href="#" class="btn btn-light btn-lg mt-3">
+            DJ05.Настройка стандартной системы аутентификации
+          </a>
+        </div>
+    </header>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% block content %}
+    {% if user.is_authenticated %}
+      <main class="container my-5">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+              <div class="card-body">
+                <h5 class="card-title">Раздел 1</h5>
+                <p class="card-text">Описание первого раздела</p>
+                <a href="#" class="btn btn-primary">Читать</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    <div class="position-fixed top-50 start-50 translate-middle p-5 bg-dark text-white rounded shadow">
+        <div class="d-flex justify-content-center">
+            К ответу на ДЗ прикрепи код:
+        </div>
+        <div class="d-flex justify-content-center">
+            <div class="p-3 m-3 bg-light border rounded text-danger fw-bold" style="font-size: 42px;">
+                1111
+            </div>
+        </div>
+        <div class="d-flex justify-content-center">
+            Так я пойму что задание проверенно качественно.
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}
