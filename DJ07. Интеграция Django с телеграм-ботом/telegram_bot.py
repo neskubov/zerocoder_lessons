@@ -1,7 +1,7 @@
 import telebot
 import requests
 
-TOKEN = "7544393487:AAEfB6Nj4Y9q7xkguZffwkwYsXQTh6gQ7rk"
+TOKEN = "TOKEN"
 API_URL = "http://127.0.0.1:8000/api/register"  # эндпоинт Django
 
 bot = telebot.TeleBot(TOKEN)
