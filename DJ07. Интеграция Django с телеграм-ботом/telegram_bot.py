@@ -1,8 +1,9 @@
 import telebot
+from telebot.types import Message
 import requests
 
-TOKEN = "7544393487:AAEfB6Nj4Y9q7xkguZffwkwYsXQTh6gQ7rk"
-API_URL = "http://127.0.0.1:8000/api/register"  # эндпоинт Django
+TOKEN = "TOKEN"
+API_URL = "http://127.0.0.1:8000/api"  # эндпоинт Django
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -13,6 +14,7 @@ user_data = {}
 def start(message):
     bot.send_message(message.chat.id, "Привет! Давай зарегистрируемся.\nВведи свой username:")
     user_data[message.chat.id] = {"step": "username"}
+
 
 @bot.message_handler(func=lambda m: True)
 def handle_message(message):
@@ -25,29 +27,20 @@ def handle_message(message):
 
     if step == "username":
         user_data[chat_id]["username"] = message.text
-        user_data[chat_id]["step"] = "user_id"
-        bot.send_message(chat_id, "Теперь введи id:")
-
-    elif step == "user_id":
-        user_data[chat_id]["user_id"] = message.text
 
         # Отправляем данные в Django
         payload = {
             "user_name": user_data[chat_id]["username"],
-            "user_id": user_data[chat_id]["user_id"]
+            "user_id": message.from_user.id
         }
-        print(payload)
 
         try:
-            response = requests.post(API_URL, json=payload)
-            print(response)
-            print(response.status_code)
+            response = requests.post(API_URL + "/register", json=payload)
             data = response.json()
             if response.status_code == 201:
                 bot.send_message(chat_id, f"Регистрация прошла успешно! ID: {data['user_id']}")
             elif response.status_code == 200:
                 bot.send_message(chat_id, f"Пользователь {data['user_name']} ({data['user_id']}) зарегистрирован ранее")
-
             else:
                 bot.send_message(chat_id, f"Ошибка: {data.get('message', 'Неизвестная ошибка')}")
         except Exception as e:
@@ -56,4 +49,23 @@ def handle_message(message):
         # Очистка
         user_data.pop(chat_id, None)
 
-bot.polling(none_stop=True)
+
+@bot.message_handler(commands=['myinfo'])
+def user_info(message: Message):
+    try:
+        response = requests.get(f"{API_URL}/user/{message.from_user.id}")
+        if response.status_code == 200:
+            try:
+                data = response.json()
+                bot.reply_to(message, f"Ваша регистрация:\n\n{data}")
+            except ValueError:
+                bot.send_message(message.chat.id, "Ошибка: сервер вернул не JSON")
+        elif response.status_code == 404:
+            bot.send_message(message.chat.id, "Вы не зарегистрированы!")
+        else:
+            bot.send_message(message.chat.id, "Непредвиденная ошибка!")
+    except Exception as e:
+        bot.send_message(message.chat.id, f"Ошибка подключения к API: {e}")
+
+if __name__ == "__main__":
+    bot.polling(none_stop=True)
