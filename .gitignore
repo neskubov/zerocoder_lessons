@@ -1,11 +1,23 @@
+# Python venv
 ../../.venv/
+.venv/
 venv/
-.env/
 env/
-.pyc
+
+# env files
+.env
+.env.*
+
+# Python cache
 __pycache__/
+*.pyc
 *.pyo
 *.py~
+
+# IDE
+.idea/
 ../.idea/
 .vscode/
-*migrations/*
+
+# Django migrations
+*/migrations/

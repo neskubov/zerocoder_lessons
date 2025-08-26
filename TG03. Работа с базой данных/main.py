@@ -2,13 +2,18 @@ import aiohttp
 import asyncio
 import logging
 import sqlite3
+import os
 from aiogram import Bot, Dispatcher
 from aiogram.filters import CommandStart, Command
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.types import Message
-from config_bot import TOKEN
+#from config_bot import TOKEN
+from dotenv import load_dotenv
+
+load_dotenv()
+TOKEN = os.getenv("BOT_TOKEN")
 
 bot = Bot(token=TOKEN)
 storage_school = MemoryStorage()
